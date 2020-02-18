@@ -35,10 +35,10 @@ public class MateriaController {
 	@Autowired
 	private IMateriaService materiaService;
 	
-	@GetMapping("/suaRota/{path}")
+	@GetMapping("/consultar/{codMatricula}")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	public ResponseEntity<Response<MateriaCadastroModel>> consultarMateriasCadastradas(@PathVariable String path) {
+	public ResponseEntity<Response<MateriaCadastroModel>> consultarMateriasCadastradas(@PathVariable String codMatricula) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<MateriaCadastroModel> responseBuilder = Response.builder();
 		responseBuilder.data(null);

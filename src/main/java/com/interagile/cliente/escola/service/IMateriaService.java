@@ -2,6 +2,7 @@ package com.interagile.cliente.escola.service;
 
 import java.util.List;
 
+import com.interagile.cliente.escola.model.CodigoMaterias;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 
 public interface IMateriaService {
@@ -12,5 +13,5 @@ public interface IMateriaService {
 	
 	Boolean atualizar(final MateriaCadastroModel materia);
 	
-	Boolean excluirMaterias(final List<String>codigosMaterias);
+	Boolean excluirMaterias(final CodigoMaterias codMaterias);
 }

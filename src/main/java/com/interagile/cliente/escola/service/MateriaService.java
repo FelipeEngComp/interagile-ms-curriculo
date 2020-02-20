@@ -1,7 +1,5 @@
 package com.interagile.cliente.escola.service;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.MateriaException;
+import com.interagile.cliente.escola.model.CodigoMaterias;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 import com.interagile.cliente.escola.model.MateriaCadastroModel.MateriaCadastroModelBuilder;
 import com.interagile.cliente.escola.repository.IMateriaRepository;
@@ -91,17 +90,18 @@ public class MateriaService implements IMateriaService {
 	}
 
 	@Override
-	public Boolean excluirMaterias(List<String> codigosMaterias) {
+	public Boolean excluirMaterias(CodigoMaterias codigosMaterias) {
 		try {
-			for(String codigo : codigosMaterias) {
-				if(Boolean.FALSE.equals(this.materiaRepository.deleteMateriaByCodigo(codigo))) {
-					throw new MateriaException("Não foi possível excluir a matéria "+codigo, HttpStatus.BAD_REQUEST.value());
+			if (codigosMaterias != null) {
+				for (String codigo : codigosMaterias.getCodigos()) {
+					this.materiaRepository.deleteMateriaByCodigo(codigo);
 				}
+				return true;
 			}
-			return true;
-		}catch (MateriaException m) {
+			throw new MateriaException("Insira ao menos um codigo", HttpStatus.BAD_REQUEST.value());
+		} catch (MateriaException m) {
 			throw m;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			throw e;
 		}
 	}

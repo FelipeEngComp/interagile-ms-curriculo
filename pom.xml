@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.interagile.cliente</groupId>
-	<artifactId>ms-template</artifactId>
+	<artifactId>ms-curriculo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo</name>
 	<description>Projeto template para os microserviços</description>

@@ -80,24 +80,12 @@
 		<dependency>
 			<groupId>com.interagile.cliente</groupId>
 			<artifactId>interagile-commons</artifactId>
-			<version>${iCommonsVersion}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-devtools</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.interagile.cliente</groupId>
 			<artifactId>interagile-commons-db</artifactId>
-			<version>${iCommonsVersion}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-devtools</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>1.0.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
@@ -107,26 +95,13 @@
 
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>github</id>
-			<name>interagile-commons</name>
-			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>commons-db</id>
-			<name>interagile-commons-db</name>
-			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+	<!-- <repositories> <repository> <id>github</id> <name>interagile-commons</name> 
+		<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons</url> 
+		<layout>default</layout> <snapshots> <enabled>false</enabled> </snapshots> 
+		</repository> <repository> <id>commons-db</id> <name>interagile-commons-db</name> 
+		<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db</url> 
+		<layout>default</layout> <snapshots> <enabled>false</enabled> </snapshots> 
+		</repository> </repositories> -->
 
 	<build>
 		<plugins>

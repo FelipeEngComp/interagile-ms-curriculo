@@ -95,13 +95,26 @@
 
 	</dependencies>
 
-	<!-- <repositories> <repository> <id>github</id> <name>interagile-commons</name> 
-		<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons</url> 
-		<layout>default</layout> <snapshots> <enabled>false</enabled> </snapshots> 
-		</repository> <repository> <id>commons-db</id> <name>interagile-commons-db</name> 
-		<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db</url> 
-		<layout>default</layout> <snapshots> <enabled>false</enabled> </snapshots> 
-		</repository> </repositories> -->
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>interagile-commons</name>
+			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>commons-db</id>
+			<name>interagile-commons-db</name>
+			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>

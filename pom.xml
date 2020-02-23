@@ -11,13 +11,17 @@
 	</parent>
 	<groupId>com.interagile.cliente</groupId>
 	<artifactId>ms-curriculo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${interagileVersion}</version>
 	<name>demo</name>
 	<description>Projeto template para os microserviços</description>
 
+	<!-- Controle das versões das dependências do projeto -->
 	<properties>
+		<interagileVersion>1.0.0</interagileVersion>
 		<java.version>1.8</java.version>
+		<iCommonsVersion>1.0.0</iCommonsVersion>
 	</properties>
+	<!-- Fim -->
 
 	<dependencies>
 		<dependency>
@@ -75,13 +79,25 @@
 		</dependency>
 		<dependency>
 			<groupId>com.interagile.cliente</groupId>
-			<artifactId>commons-db</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>interagile-commons</artifactId>
+			<version>${iCommonsVersion}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-devtools</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.interagile.cliente</groupId>
-			<artifactId>commons</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>interagile-commons-db</artifactId>
+			<version>${iCommonsVersion}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-devtools</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
@@ -90,6 +106,27 @@
 		</dependency>
 
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>interagile-commons</name>
+			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>commons-db</id>
+			<name>interagile-commons-db</name>
+			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>

@@ -75,7 +75,7 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
-		<dependency>
+		<!--  <dependency>
 			<groupId>com.interagile</groupId>
 			<artifactId>interagile-commons</artifactId>
 			<version>1.0.0</version>
@@ -84,7 +84,7 @@
 			<groupId>com.interagile</groupId>
 			<artifactId>interagile-commons-db</artifactId>
 			<version>1.0.0</version>
-		</dependency>
+		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>

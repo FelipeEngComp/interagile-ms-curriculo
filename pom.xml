@@ -9,17 +9,15 @@
 		<version>2.2.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.interagile.cliente</groupId>
+	<groupId>com.interagile</groupId>
 	<artifactId>ms-curriculo</artifactId>
-	<version>${interagileVersion}</version>
-	<name>demo</name>
+	<version>1.0.0</version>
+	<name>curriculo</name>
 	<description>Projeto template para os microserviços</description>
 
 	<!-- Controle das versões das dependências do projeto -->
 	<properties>
-		<interagileVersion>1.0.0</interagileVersion>
 		<java.version>1.8</java.version>
-		<iCommonsVersion>1.0.0</iCommonsVersion>
 	</properties>
 	<!-- Fim -->
 
@@ -78,12 +76,12 @@
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.interagile.cliente</groupId>
+			<groupId>com.interagile</groupId>
 			<artifactId>interagile-commons</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.interagile.cliente</groupId>
+			<groupId>com.interagile</groupId>
 			<artifactId>interagile-commons-db</artifactId>
 			<version>1.0.0</version>
 		</dependency>
@@ -92,35 +90,62 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.FelipeEngComp</groupId>
+			<artifactId>interagile-commons</artifactId>
+			<version>develop-fde783c0e3-1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.FelipeEngComp</groupId>
+			<artifactId>interagile-commons-db</artifactId>
+			<version>develop-3d21578a13-1</version>
+		</dependency>
 
 	</dependencies>
 
 	<repositories>
+		<!-- <repository> <id>github</id> <name>interagile-commons</name> <url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons</url> 
+			<layout>default</layout> <snapshots> <enabled>false</enabled> </snapshots> 
+			</repository> <repository> <id>commons-db</id> <name>interagile-commons-db</name> 
+			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db</url> 
+			<layout>default</layout> <snapshots> <enabled>false</enabled> </snapshots> 
+			</repository> <repository> <id>github</id> <url>https://raw.github.com/FelipeEngComp/interagile-commons/</url> 
+			<snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> </snapshots> 
+			</repository> <repository> <id>commons-db</id> <url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db/</url> 
+			<snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> </snapshots> 
+			</repository> -->
 		<repository>
-			<id>github</id>
-			<name>interagile-commons</name>
-			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>commons-db</id>
-			<name>interagile-commons-db</name>
-			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Dependencies>jdk.unsupported</Dependencies>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.platform</groupId>
+						<artifactId>junit-platform-surefire-provider</artifactId>
+						<version>1.0.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

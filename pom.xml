@@ -91,22 +91,12 @@
 		<dependency>
 			<groupId>com.github.FelipeEngComp</groupId>
 			<artifactId>interagile-commons-db</artifactId>
-			<version>develop-cdace97d52-1</version>
+			<version>develop-1da4b4f453-1</version>
 		</dependency>
 
 	</dependencies>
 
 	<repositories>
-		<!-- <repository> <id>github</id> <name>interagile-commons</name> <url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons</url> 
-			<layout>default</layout> <snapshots> <enabled>false</enabled> </snapshots> 
-			</repository> <repository> <id>commons-db</id> <name>interagile-commons-db</name> 
-			<url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db</url> 
-			<layout>default</layout> <snapshots> <enabled>false</enabled> </snapshots> 
-			</repository> <repository> <id>github</id> <url>https://raw.github.com/FelipeEngComp/interagile-commons/</url> 
-			<snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> </snapshots> 
-			</repository> <repository> <id>commons-db</id> <url>https://maven.pkg.github.com/FelipeEngComp/interagile-commons-db/</url> 
-			<snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> </snapshots> 
-			</repository> -->
 		<repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>

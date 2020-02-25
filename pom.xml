@@ -93,12 +93,12 @@
 		<dependency>
 			<groupId>com.github.FelipeEngComp</groupId>
 			<artifactId>interagile-commons</artifactId>
-			<version>develop-fde783c0e3-1</version>
+			<version>develop-f37e60bd2d-1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.FelipeEngComp</groupId>
 			<artifactId>interagile-commons-db</artifactId>
-			<version>develop-3d21578a13-1</version>
+			<version>develop-cdace97d52-1</version>
 		</dependency>
 
 	</dependencies>

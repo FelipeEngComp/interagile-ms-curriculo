@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.MateriaException;
-import com.interagile.cliente.escola.model.CodigoMaterias;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 import com.interagile.cliente.escola.model.MateriaCadastroModel.MateriaCadastroModelBuilder;
 import com.interagile.cliente.escola.repository.IMateriaRepository;
@@ -82,23 +81,6 @@ public class MateriaService implements IMateriaService {
 				return true;
 			}
 			throw new MateriaException("Matéria inexistente", HttpStatus.BAD_REQUEST.value());
-		} catch (MateriaException m) {
-			throw m;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-
-	@Override
-	public Boolean excluirMaterias(CodigoMaterias codigosMaterias) {
-		try {
-			if (codigosMaterias != null) {
-				for (String codigo : codigosMaterias.getCodigos()) {
-					this.materiaRepository.deleteMateriaByCodigo(codigo);
-				}
-				return true;
-			}
-			throw new MateriaException("Insira ao menos um codigo", HttpStatus.BAD_REQUEST.value());
 		} catch (MateriaException m) {
 			throw m;
 		} catch (Exception e) {

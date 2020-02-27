@@ -18,11 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.interagile.cliente.escola.exception.MateriaException;
-import com.interagile.cliente.escola.model.CodigoMaterias;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
+import com.interagile.cliente.escola.response.Response;
+import com.interagile.cliente.escola.response.Response.ResponseBuilder;
 import com.interagile.cliente.escola.service.IMateriaService;
-import com.interagile.cliente.template.escola.Response;
-import com.interagile.cliente.template.escola.Response.ResponseBuilder;
 
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -107,27 +106,4 @@ public class MateriaController {
 		}
 	}
 	
-	@PostMapping("/excluir")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
-			@ApiResponse(code = 400, message = "Erro na requisição") })
-	public ResponseEntity<Response<Boolean>> excluirMaterias(@RequestBody CodigoMaterias codMaterias) {
-		LOG.debug("Iniciando a controller");
-		ResponseBuilder<Boolean> responseBuilder = Response.builder();
-		try {
-			Boolean matriculaExcluida = this.materiaService.excluirMaterias(codMaterias);
-			responseBuilder.data(matriculaExcluida);
-			responseBuilder.status(HttpStatus.OK.value());
-			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
-		}catch (MateriaException m) {
-			responseBuilder.data(false);
-			responseBuilder.erros(Arrays.asList(m.getMessage()));
-			responseBuilder.status(m.getHttpStatusCode());
-			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
-		} catch (Exception e) {
-			responseBuilder.data(false);
-			responseBuilder.erros(Arrays.asList(e.getMessage()));
-			responseBuilder.status(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
-		}
-	}
 }

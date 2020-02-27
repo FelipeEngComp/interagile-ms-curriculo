@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.interagile.cliente.template.escola.Response;
-import com.interagile.cliente.template.escola.Response.ResponseBuilder;
+import com.interagile.cliente.escola.response.Response;
+import com.interagile.cliente.escola.response.Response.ResponseBuilder;
 
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

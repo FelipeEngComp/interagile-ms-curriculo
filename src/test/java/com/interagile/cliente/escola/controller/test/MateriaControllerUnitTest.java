@@ -3,10 +3,7 @@ package com.interagile.cliente.escola.controller.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.Instant;
-import java.util.Date;
-
-import org.junit.Assert;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
@@ -21,12 +18,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 
+import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.service.IMateriaService;
@@ -55,7 +51,7 @@ public class MateriaControllerUnitTest {
 	public void testConsultaCadastroUsuarioSucesso() {
 		MateriaCadastroModel materiaCadastro = new MateriaCadastroModel("Sinais e sistemas", 68, "SINSIS", 1);
 
-		Mockito.when(materiaService.consultarMateriaCadastrada("CodMat123")).thenReturn(materiaCadastro);
+		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenReturn(materiaCadastro);
 
 		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
 				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
@@ -64,6 +60,32 @@ public class MateriaControllerUnitTest {
 
 		assertNotNull(materia);
 		assertEquals(200, materia.getStatusCode().value());
+	}
+	
+	@Test
+	public void testConsultaCadastroUsuarioCurriculoException() {
+
+		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenThrow(new CurriculoException("Error",HttpStatus.BAD_REQUEST.value()));
+
+		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
+				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
+				HttpMethod.GET, null, new ParameterizedTypeReference<Response<MateriaCadastroModel>>() {
+				});
+
+		assertEquals(400, materia.getBody().getStatus());
+	}
+	
+	@Test
+	public void testConsultaCadastroUsuarioException() {
+
+		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenThrow(new RuntimeException());
+
+		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
+				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
+				HttpMethod.GET, null, new ParameterizedTypeReference<Response<MateriaCadastroModel>>() {
+				});
+
+		assertEquals(500, materia.getBody().getStatus());
 	}
 
 }

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.interagile.cliente.escola.dao.MateriaDAO;
-import com.interagile.cliente.escola.exception.MateriaException;
+import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 import com.interagile.cliente.escola.model.MateriaCadastroModel.MateriaCadastroModelBuilder;
 import com.interagile.cliente.escola.repository.IMateriaRepository;
@@ -34,7 +34,7 @@ public class MateriaService implements IMateriaService {
 
 			this.materiaRepository.save(materiaDao);
 			return true;
-		} catch (MateriaException m) {
+		} catch (CurriculoException m) {
 			throw m;
 		} catch (Exception e) {
 			throw e;
@@ -47,7 +47,7 @@ public class MateriaService implements IMateriaService {
 		try {
 			final MateriaDAO materiaDao = this.materiaRepository.findMateriaByCodigo(codMateria);
 			if (materiaDao == null) {
-				throw new MateriaException("Matéria não encontrada", HttpStatus.BAD_REQUEST.value());
+				throw new CurriculoException("Matéria não encontrada", HttpStatus.BAD_REQUEST.value());
 			}
 			MateriaCadastroModelBuilder materiaBuilder = MateriaCadastroModel.builder();
 			materiaBuilder.codigo(materiaDao.getCodigo());
@@ -56,7 +56,7 @@ public class MateriaService implements IMateriaService {
 			materiaBuilder.nome(materiaDao.getNome());
 
 			return materiaBuilder.build();
-		} catch (MateriaException m) {
+		} catch (CurriculoException m) {
 			throw m;
 		} catch (Exception e) {
 			throw e;
@@ -80,8 +80,8 @@ public class MateriaService implements IMateriaService {
 
 				return true;
 			}
-			throw new MateriaException("Matéria inexistente", HttpStatus.BAD_REQUEST.value());
-		} catch (MateriaException m) {
+			throw new CurriculoException("Matéria inexistente", HttpStatus.BAD_REQUEST.value());
+		} catch (CurriculoException m) {
 			throw m;
 		} catch (Exception e) {
 			throw e;
@@ -90,7 +90,7 @@ public class MateriaService implements IMateriaService {
 
 	private void validaCadastro(MateriaCadastroModel materia) {
 		if (this.materiaRepository.findMateriaByCodigo(materia.getCodigo()) != null) {
-			throw new MateriaException("Código já foi usado para cadastro de outra matéria",
+			throw new CurriculoException("Código já foi usado para cadastro de outra matéria",
 					HttpStatus.BAD_REQUEST.value());
 		}
 		this.validaEntradaGeral(materia);
@@ -98,16 +98,16 @@ public class MateriaService implements IMateriaService {
 
 	private void validaEntradaGeral(MateriaCadastroModel materia) {
 		if (materia.getNome() == null || StringUtils.isEmpty(materia.getNome())) {
-			throw new MateriaException("Nome da matéria vazio.", HttpStatus.BAD_REQUEST.value());
+			throw new CurriculoException("Nome da matéria vazio.", HttpStatus.BAD_REQUEST.value());
 		}
 		if (materia.getCodigo() == null || StringUtils.isEmpty(materia.getCodigo())) {
-			throw new MateriaException("Código da matéria vazio.", HttpStatus.BAD_REQUEST.value());
+			throw new CurriculoException("Código da matéria vazio.", HttpStatus.BAD_REQUEST.value());
 		}
 		if (materia.getHoras() <= 0) {
-			throw new MateriaException("Horas da máteria têm que ser positivas.", HttpStatus.BAD_REQUEST.value());
+			throw new CurriculoException("Horas da máteria têm que ser positivas.", HttpStatus.BAD_REQUEST.value());
 		}
 		if (materia.getFrequencia() != 1 && materia.getFrequencia() != 2) {
-			throw new MateriaException("Frequência pode ser apenas 1 ou 2.", HttpStatus.BAD_REQUEST.value());
+			throw new CurriculoException("Frequência pode ser apenas 1 ou 2.", HttpStatus.BAD_REQUEST.value());
 		}
 	}
 

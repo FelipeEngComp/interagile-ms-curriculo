@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.interagile.cliente.escola.exception.MateriaException;
+import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.response.Response.ResponseBuilder;
@@ -47,7 +47,7 @@ public class MateriaController {
 			responseBuilder.data(matriculaCadastrada);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
-		}catch (MateriaException m) {
+		}catch (CurriculoException m) {
 			responseBuilder.erros(Arrays.asList(m.getMessage()));
 			responseBuilder.status(m.getHttpStatusCode());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
@@ -69,7 +69,7 @@ public class MateriaController {
 			responseBuilder.data(matriculaCadastrada);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
-		}catch (MateriaException m) {
+		}catch (CurriculoException m) {
 			responseBuilder.data(false);
 			responseBuilder.erros(Arrays.asList(m.getMessage()));
 			responseBuilder.status(m.getHttpStatusCode());
@@ -93,7 +93,7 @@ public class MateriaController {
 			responseBuilder.data(matriculaCadastrada);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
-		}catch (MateriaException m) {
+		}catch (CurriculoException m) {
 			responseBuilder.data(false);
 			responseBuilder.erros(Arrays.asList(m.getMessage()));
 			responseBuilder.status(m.getHttpStatusCode());

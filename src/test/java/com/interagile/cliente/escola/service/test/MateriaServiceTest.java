@@ -26,7 +26,7 @@ import com.interagile.cliente.escola.service.MateriaService;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MateriaServiceTest {
 
-	// expliucar a diferenca entre mockBean e mock
+	// explicar a diferenca entre mockBean e mock
 	@Mock
 	private IMateriaRepository materiaRepositoryMock;
 

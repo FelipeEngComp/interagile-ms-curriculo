@@ -1,13 +1,16 @@
 package com.interagile.cliente.escola.service;
 
+import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 
 public interface IMateriaService {
 	
-	Boolean cadastrar(final MateriaCadastroModel materia);
+	public Boolean cadastrar(final MateriaCadastroModel materia);
 	
-	MateriaCadastroModel consultarMateriaCadastrada(final String codMateria);
+	public MateriaCadastroModel consultarMateriaCadastrada(final String codMateria);
 	
-	Boolean atualizar(final MateriaCadastroModel materia);
+	public Boolean atualizar(final MateriaCadastroModel materia);
+	
+	public MateriaDAO consultarMateriaDaoCadastrada(String codMateria);
 	
 }

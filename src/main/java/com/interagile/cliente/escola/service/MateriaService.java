@@ -70,7 +70,7 @@ public class MateriaService implements IMateriaService {
 			this.validaEntradaGeral(materia);
 			MateriaDAO materiaDao = this.materiaRepository.findMateriaByCodigo(materia.getCodigo());
 			if (materiaDao != null) {
-				materiaDao.setId(materiaDao.getId());
+				materiaDao.setIdMateria(materiaDao.getIdMateria());
 				materiaDao.setNome(StringUtils.upperCase(materia.getNome()));
 				materiaDao.setCodigo(StringUtils.upperCase(materia.getCodigo()));
 				materiaDao.setFrequencia(materia.getFrequencia());
@@ -87,9 +87,26 @@ public class MateriaService implements IMateriaService {
 			throw e;
 		}
 	}
+	
+	public MateriaDAO consultarMateriaDaoCadastrada(String codMateria) {
+		try {
+			final MateriaDAO materiaDao = this.materiaRepository.findMateriaByCodigo(codMateria);
+			if (materiaDao == null) {
+				throw new CurriculoException("Matéria não encontrada", HttpStatus.BAD_REQUEST.value());
+			}
+
+			return materiaDao;
+		} catch (CurriculoException m) {
+			throw m;
+		} catch (Exception e) {
+			throw e;
+		}
+
+	}
+	
 
 	private void validaCadastro(MateriaCadastroModel materia) {
-		if (this.materiaRepository.findMateriaByCodigo(materia.getCodigo()) != null) {
+		if (this.materiaRepository.findMateriaByCodigo(StringUtils.upperCase(materia.getCodigo())) != null) {
 			throw new CurriculoException("Código já foi usado para cadastro de outra matéria",
 					HttpStatus.BAD_REQUEST.value());
 		}

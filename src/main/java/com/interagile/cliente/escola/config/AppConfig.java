@@ -13,5 +13,5 @@ public class AppConfig implements WebMvcConfigurer {
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
 	}
-
+	
 }

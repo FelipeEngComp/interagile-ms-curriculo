@@ -3,6 +3,8 @@ package com.interagile.cliente.escola.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +21,13 @@ public class CursoService implements ICursoService {
 
 	private ICursoRepository cursoRepository;
 	private IMateriaService materiaService;
+	private EntityManager entityManager;
 
 	@Autowired
-	public CursoService(ICursoRepository cursoRepository, IMateriaService materiaService) {
+	public CursoService(ICursoRepository cursoRepository, IMateriaService materiaService,EntityManager entityManager) {
 		this.cursoRepository = cursoRepository;
 		this.materiaService = materiaService;
+		this.entityManager =entityManager;
 	}
 
 	@Override
@@ -39,6 +43,10 @@ public class CursoService implements ICursoService {
 			CursoDAO cursoDAO = this.criaObj(curso, new CursoDAO());
 
 			this.cursoRepository.save(cursoDAO);
+			
+//			entityManager.getTransaction().begin();
+//            entityManager.persist(cursoDAO);
+//            entityManager.getTransaction().commit();
 
 			return true;
 
@@ -80,8 +88,9 @@ public class CursoService implements ICursoService {
 
 	@Override
 	public List<CursoDAO> listarCursos() {
-
-		return this.cursoRepository.findAll();
+		
+		List<CursoDAO> cursoDao = this.cursoRepository.findAll();
+		return cursoDao;
 	}
 
 	private List<MateriaDAO> consultaMaterias(List<String> materias) {

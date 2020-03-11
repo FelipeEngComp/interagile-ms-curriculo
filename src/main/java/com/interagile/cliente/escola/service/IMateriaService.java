@@ -1,5 +1,7 @@
 package com.interagile.cliente.escola.service;
 
+import java.util.List;
+
 import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 
@@ -12,5 +14,7 @@ public interface IMateriaService {
 	public Boolean atualizar(final MateriaCadastroModel materia);
 	
 	public MateriaDAO consultarMateriaDaoCadastrada(String codMateria);
+	
+	public List<MateriaDAO> listarMaterias();
 	
 }

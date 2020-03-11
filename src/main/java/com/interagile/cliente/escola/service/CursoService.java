@@ -3,9 +3,9 @@ package com.interagile.cliente.escola.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,29 +21,33 @@ public class CursoService implements ICursoService {
 
 	private ICursoRepository cursoRepository;
 	private IMateriaService materiaService;
-	
+	private EntityManager entityManager;
 
 	@Autowired
-	public CursoService(ICursoRepository cursoRepository, IMateriaService materiaService) {
+	public CursoService(ICursoRepository cursoRepository, IMateriaService materiaService,EntityManager entityManager) {
 		this.cursoRepository = cursoRepository;
 		this.materiaService = materiaService;
+		this.entityManager =entityManager;
 	}
 
 	@Override
 	public Boolean cadastra(CursoCadastroModel curso) {
 		try {
 
+			if (this.cursoRepository.findCursoByCodigo(StringUtils.upperCase(curso.getCodigo())) != null) {
+				throw new CurriculoException("Curso já cadastrado", HttpStatus.BAD_REQUEST.value());
+			}
+
 			this.validarParametrosDeEntrada(curso);
-			List<MateriaDAO> materias = this.consultaMaterias(curso.getMaterias());
-			
-			CursoDAO cursoDAO = new CursoDAO();
-			cursoDAO.setCodigo(StringUtils.upperCase(curso.getCodigo()));
-			cursoDAO.setNome(StringUtils.upperCase(curso.getNome()));
-			cursoDAO.setSemestres(curso.getSemestres());
-			cursoDAO.setMaterias(materias);
-			
+
+			CursoDAO cursoDAO = this.criaObj(curso, new CursoDAO());
+
 			this.cursoRepository.save(cursoDAO);
 			
+//			entityManager.getTransaction().begin();
+//            entityManager.persist(cursoDAO);
+//            entityManager.getTransaction().commit();
+
 			return true;
 
 		} catch (CurriculoException curriculoException) {
@@ -56,20 +60,37 @@ public class CursoService implements ICursoService {
 
 	@Override
 	public CursoDAO consultaPorCod(String codigo) {
-		
+
 		CursoDAO curso = this.cursoRepository.findCursoByCodigo(codigo);
-		
-		if(curso == null) {
+
+		if (curso == null) {
 			throw new CurriculoException("Curso não encontrado", HttpStatus.BAD_REQUEST.value());
 		}
-		
+
 		return curso;
 	}
 
 	@Override
-	public Boolean atualizar(CursoDAO curso) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean atualizar(CursoCadastroModel cursoModel) {
+
+		this.validarParametrosDeEntrada(cursoModel);
+
+		CursoDAO curso = this.cursoRepository.findCursoByCodigo(StringUtils.upperCase(cursoModel.getCodigo()));
+
+		if (curso == null) {
+			throw new CurriculoException("Curso ainda não cadastrado", HttpStatus.BAD_REQUEST.value());
+		}
+
+		this.cursoRepository.save(this.criaObj(cursoModel, curso));
+
+		return true;
+	}
+
+	@Override
+	public List<CursoDAO> listarCursos() {
+		
+		List<CursoDAO> cursoDao = this.cursoRepository.findAll();
+		return cursoDao;
 	}
 
 	private List<MateriaDAO> consultaMaterias(List<String> materias) {
@@ -77,16 +98,23 @@ public class CursoService implements ICursoService {
 		List<MateriaDAO> materiaDao = new ArrayList<>();
 
 		for (String materia : materias) {
-			materiaDao.add(this.materiaService.consultarMateriaDaoCadastrada(materia));
+			materiaDao.add(this.materiaService.consultarMateriaDaoCadastrada(StringUtils.upperCase(materia)));
 		}
 		return materiaDao;
 	}
 
-	private void validarParametrosDeEntrada(CursoCadastroModel curso) {
+	private CursoDAO criaObj(CursoCadastroModel curso, CursoDAO cursoDAO) {
 
-		if (this.cursoRepository.findCursoByCodigo(StringUtils.upperCase(curso.getCodigo())) != null) {
-			throw new CurriculoException("Curso já cadastrado", HttpStatus.BAD_REQUEST.value());
-		}
+		List<MateriaDAO> materias = this.consultaMaterias(curso.getMaterias());
+
+		cursoDAO.setCodigo(StringUtils.upperCase(curso.getCodigo()));
+		cursoDAO.setNome(StringUtils.upperCase(curso.getNome()));
+		cursoDAO.setSemestres(curso.getSemestres());
+		cursoDAO.setMaterias(materias);
+		return cursoDAO;
+	}
+
+	private void validarParametrosDeEntrada(CursoCadastroModel curso) {
 
 		if (curso.getSemestres() <= 0 || curso.getSemestres() >= 15) {
 			throw new CurriculoException("Quantidade de semestres incorretas", HttpStatus.BAD_REQUEST.value());

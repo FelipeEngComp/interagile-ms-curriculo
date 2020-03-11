@@ -1,5 +1,7 @@
 package com.interagile.cliente.escola.service;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -87,7 +89,12 @@ public class MateriaService implements IMateriaService {
 			throw e;
 		}
 	}
-	
+
+	@Override
+	public List<MateriaDAO> listarMaterias() {
+		return this.materiaRepository.findAll();
+	}
+
 	public MateriaDAO consultarMateriaDaoCadastrada(String codMateria) {
 		try {
 			final MateriaDAO materiaDao = this.materiaRepository.findMateriaByCodigo(codMateria);
@@ -103,7 +110,6 @@ public class MateriaService implements IMateriaService {
 		}
 
 	}
-	
 
 	private void validaCadastro(MateriaCadastroModel materia) {
 		if (this.materiaRepository.findMateriaByCodigo(StringUtils.upperCase(materia.getCodigo())) != null) {

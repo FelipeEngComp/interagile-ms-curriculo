@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,7 +59,7 @@ public class CursoController {
 		}
 	}
 	
-	@PutMapping("/cadastrar")
+	@PutMapping("/atualizar")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
 	public ResponseEntity<Response<Boolean>> atualizarCurso(@RequestBody CursoCadastroModel curso) {
@@ -88,6 +89,28 @@ public class CursoController {
 		ResponseBuilder<List<CursoDAO>> responseBuilder = Response.builder();
 		try {
 			List<CursoDAO> cursoCadastrados = this.cursoService.listarCursos();
+			responseBuilder.data(cursoCadastrados);
+			responseBuilder.status(HttpStatus.OK.value());
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		}catch (CurriculoException m) {
+			responseBuilder.erros(Arrays.asList(m.getMessage()));
+			responseBuilder.status(m.getHttpStatusCode());
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		} catch (Exception e) {
+			responseBuilder.erros(Arrays.asList(e.getMessage()));
+			responseBuilder.status(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		}
+	}
+	
+	@GetMapping("/consultar/{codigo}")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
+			@ApiResponse(code = 400, message = "Erro na requisição") })
+	public ResponseEntity<Response<CursoDAO>> consultarCursoPorCod(@PathVariable String codigo) {
+		LOG.debug("Iniciando a controller");
+		ResponseBuilder<CursoDAO> responseBuilder = Response.builder();
+		try {
+			CursoDAO cursoCadastrados = this.cursoService.consultaPorCod(codigo);
 			responseBuilder.data(cursoCadastrados);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());

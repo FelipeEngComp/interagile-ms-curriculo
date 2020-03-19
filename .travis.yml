@@ -4,4 +4,6 @@ jdk:
 deploy:
   provider: heroku:git
   api_key: 900d07c3-4000-4dac-b271-c1566e03bade
+  on:
+    all_branches: true
   edge: true # opt in to dpl v2

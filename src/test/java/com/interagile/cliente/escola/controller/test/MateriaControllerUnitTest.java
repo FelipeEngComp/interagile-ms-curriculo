@@ -52,8 +52,8 @@ public class MateriaControllerUnitTest {
 		MateriaCadastroModel materiaCadastro = new MateriaCadastroModel("Sinais e sistemas", 68, "SINSIS", 1);
 
 		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenReturn(materiaCadastro);
-
-		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
+		
+		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.withBasicAuth("interagile", "mscurriculo").exchange(
 				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
 				HttpMethod.GET, null, new ParameterizedTypeReference<Response<MateriaCadastroModel>>() {
 				});
@@ -67,7 +67,7 @@ public class MateriaControllerUnitTest {
 
 		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenThrow(new CurriculoException("Error",HttpStatus.BAD_REQUEST.value()));
 
-		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
+		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.withBasicAuth("interagile", "mscurriculo").exchange(
 				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
 				HttpMethod.GET, null, new ParameterizedTypeReference<Response<MateriaCadastroModel>>() {
 				});
@@ -80,7 +80,7 @@ public class MateriaControllerUnitTest {
 
 		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenThrow(new RuntimeException());
 
-		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
+		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.withBasicAuth("interagile", "mscurriculo").exchange(
 				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
 				HttpMethod.GET, null, new ParameterizedTypeReference<Response<MateriaCadastroModel>>() {
 				});

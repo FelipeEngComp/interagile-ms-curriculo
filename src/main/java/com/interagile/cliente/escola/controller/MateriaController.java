@@ -23,10 +23,13 @@ import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.response.Response.ResponseBuilder;
 import com.interagile.cliente.escola.service.IMateriaService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
+@Api(value = "Materia")
 @RequestMapping("/materia")
 @CrossOrigin(origins = "*")
 public class MateriaController {
@@ -36,9 +39,10 @@ public class MateriaController {
 	@Autowired
 	private IMateriaService materiaService;
 	
-	@GetMapping("/consultar/{codMatricula}")
+	@ApiOperation(value = "Consultar matéria")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
+	@GetMapping("/consultar/{codMatricula}")
 	public ResponseEntity<Response<MateriaCadastroModel>> consultarMateriasCadastradas(@PathVariable String codMatricula) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<MateriaCadastroModel> responseBuilder = Response.builder();
@@ -57,10 +61,11 @@ public class MateriaController {
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
 		}
 	}
-
-	@PostMapping("/cadastrar")
+	
+	@ApiOperation(value = "Cadastrar matéria")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
+	@PostMapping("/cadastrar")
 	public ResponseEntity<Response<Boolean>> cadastrarMateria(@RequestBody MateriaCadastroModel materia) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
@@ -82,9 +87,10 @@ public class MateriaController {
 		}
 	}
 	
-	@PutMapping("/atualizar")
+	@ApiOperation(value = "Atualizar matéria")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
+	@PutMapping("/atualizar")
 	public ResponseEntity<Response<Boolean>> atualizarMateria(@RequestBody MateriaCadastroModel materia) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();

@@ -24,10 +24,13 @@ import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.response.Response.ResponseBuilder;
 import com.interagile.cliente.escola.service.ICursoService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
+@Api(value = "Curso")
 @RequestMapping("/curso")
 @CrossOrigin(origins = "*")
 public class CursoController {
@@ -37,9 +40,10 @@ public class CursoController {
 	@Autowired
 	private ICursoService cursoService;
 	
-	@PostMapping("/cadastrar")
+	@ApiOperation(value = "Cadastrar curso")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
+	@PostMapping("/cadastrar")
 	public ResponseEntity<Response<Boolean>> cadastrarCurso(@RequestBody CursoCadastroModel curso) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
@@ -59,9 +63,10 @@ public class CursoController {
 		}
 	}
 	
-	@PutMapping("/atualizar")
+	@ApiOperation(value = "Atualizar curso")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
+	@PutMapping("/atualizar")
 	public ResponseEntity<Response<Boolean>> atualizarCurso(@RequestBody CursoCadastroModel curso) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
@@ -81,9 +86,10 @@ public class CursoController {
 		}
 	}
 	
-	@GetMapping("/listar")
+	@ApiOperation(value = "Listar cursos")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
+	@GetMapping("/listar")
 	public ResponseEntity<Response<List<CursoDAO>>> listarCursos() {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<List<CursoDAO>> responseBuilder = Response.builder();
@@ -103,9 +109,10 @@ public class CursoController {
 		}
 	}
 	
-	@GetMapping("/consultar/{codigo}")
+	@ApiOperation(value = "Consultar curso por código cadastrado")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
+	@GetMapping("/consultar/{codigo}")
 	public ResponseEntity<Response<CursoDAO>> consultarCursoPorCod(@PathVariable String codigo) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<CursoDAO> responseBuilder = Response.builder();

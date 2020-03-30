@@ -1,5 +1,9 @@
 package com.interagile.cliente.escola.model;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
@@ -7,7 +11,8 @@ import lombok.Value;
 @Builder
 @Value
 @AllArgsConstructor
-public class MateriaCadastroModel {
+@JsonDeserialize
+public class MateriaCadastroModel{
 	
 	private final String nome;
 	private final int horas;

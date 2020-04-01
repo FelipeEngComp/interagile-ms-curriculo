@@ -120,7 +120,7 @@
 		<dependency>
 			<groupId>com.github.FelipeEngComp</groupId>
 			<artifactId>interagile-commons-db</artifactId>
-			<version>develop-SNAPSHOT</version>
+			<version>develop-faf712af28-1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

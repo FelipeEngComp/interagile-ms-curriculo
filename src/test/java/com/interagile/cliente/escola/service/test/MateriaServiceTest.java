@@ -83,9 +83,9 @@ public class MateriaServiceTest {
 	}
 
 	@Test
-	public void cadastrarMateriaCurriculoCurriculoException() {
+	public void cadastrarMateriaCurriculoException() {
 		
-		Mockito.when(this.materiaRepositoryMock.findMateriaByCodigo(this.materia.getCodigo())).thenReturn(null);
+		Mockito.when(this.materiaRepositoryMock.findMateriaByCodigo(this.materia.getCodigo())).thenReturn(new MateriaDAO());
 
 		this.materia = new MateriaCadastroModel();
 		

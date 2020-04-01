@@ -122,24 +122,24 @@
 			<artifactId>interagile-commons-db</artifactId>
 			<version>develop-SNAPSHOT</version>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency> -->
-		<!-- <dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
-		</dependency> -->
-		<!-- dependencia para realização de cache -->
-		<!-- <dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency> -->
-		<!-- dependency>
+		</dependency>
+		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<type>jar</type>
-		</dependency> -->
+		</dependency>
+	
 
 	</dependencies>
 

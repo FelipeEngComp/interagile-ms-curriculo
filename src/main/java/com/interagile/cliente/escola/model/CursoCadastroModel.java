@@ -2,12 +2,14 @@ package com.interagile.cliente.escola.model;
 
 import java.util.List;
 
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class CursoCadastroModel {
-	private final String codigo;
-	private final String nome;
-	private final int semestres;
-	private final List<String> materias;
+
+	private  String codigo;
+	private  String nome;
+	private  int semestres;
+	private  List<String> materias;
+
 }

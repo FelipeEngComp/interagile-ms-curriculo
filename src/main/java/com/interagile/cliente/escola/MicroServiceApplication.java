@@ -7,7 +7,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-//@EnableCaching
 public class MicroServiceApplication extends SpringBootServletInitializer{
 	
 	@Override

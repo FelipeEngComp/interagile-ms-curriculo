@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.interagile.cliente.escola.dao.CursoDAO;
 import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
-import com.interagile.cliente.escola.model.MateriaCadastroModel.MateriaCadastroModelBuilder;
 import com.interagile.cliente.escola.repository.IMateriaRepository;
 
 @Service
@@ -51,13 +51,13 @@ public class MateriaService implements IMateriaService {
 			if (materiaDao == null) {
 				throw new CurriculoException("Matéria não encontrada", HttpStatus.BAD_REQUEST.value());
 			}
-			MateriaCadastroModelBuilder materiaBuilder = MateriaCadastroModel.builder();
-			materiaBuilder.codigo(materiaDao.getCodigo());
-			materiaBuilder.frequencia(materiaDao.getFrequencia());
-			materiaBuilder.horas(materiaDao.getHoras());
-			materiaBuilder.nome(materiaDao.getNome());
+			MateriaCadastroModel materia = new MateriaCadastroModel() ;
+			materia.setCodigo(materiaDao.getCodigo());
+			materia.setFrequencia(materiaDao.getFrequencia());
+			materia.setHoras(materiaDao.getHoras());
+			materia.setNome(materiaDao.getNome());
 
-			return materiaBuilder.build();
+			return materia;
 		} catch (CurriculoException m) {
 			throw m;
 		} catch (Exception e) {

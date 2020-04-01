@@ -49,8 +49,13 @@ public class MateriaControllerUnitTest {
 
 	@Test
 	public void testConsultaCadastroUsuarioSucesso() {
-		MateriaCadastroModel materiaCadastro = new MateriaCadastroModel("Sinais e sistemas", 68, "SINSIS", 1);
-
+		MateriaCadastroModel materiaCadastro = new MateriaCadastroModel();
+		
+		materiaCadastro.setNome("Sinais e sistemas");
+		materiaCadastro.setFrequencia(1);
+		materiaCadastro.setHoras(68);
+		materiaCadastro.setCodigo("SINSIS");
+		
 		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenReturn(materiaCadastro);
 		
 		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.withBasicAuth("interagile", "mscurriculo").exchange(

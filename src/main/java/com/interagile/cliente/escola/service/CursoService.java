@@ -51,7 +51,7 @@ public class CursoService implements ICursoService {
 		}
 
 	}
-	
+
 	@Cacheable(value = CacheConstants.CONSULTA_CURSO_POR_CODIGO, key = CacheConstants.ChaveCache.CHAVE_CODIGO, unless = "#result==null or #result.size()==0")
 	@Override
 	public CursoDAO consultaPorCod(String codigo) {
@@ -80,10 +80,10 @@ public class CursoService implements ICursoService {
 
 		return true;
 	}
-	
+
 	@Override
 	public List<CursoDAO> listarCursos() {
-		
+
 		List<CursoDAO> cursoDao = this.cursoRepository.findAll();
 		return cursoDao;
 	}
@@ -92,9 +92,10 @@ public class CursoService implements ICursoService {
 
 		List<MateriaDAO> materiaDao = new ArrayList<>();
 
-		for (String materia : materias) {
-			materiaDao.add(this.materiaService.consultarMateriaDaoCadastrada(StringUtils.upperCase(materia)));
-		}
+		if (materias != null)
+			for (String materia : materias) {
+				materiaDao.add(this.materiaService.consultarMateriaDaoCadastrada(StringUtils.upperCase(materia)));
+			}
 		return materiaDao;
 	}
 

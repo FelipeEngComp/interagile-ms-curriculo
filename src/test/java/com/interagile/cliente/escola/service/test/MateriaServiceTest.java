@@ -42,7 +42,12 @@ public class MateriaServiceTest {
 
 		MockitoAnnotations.initMocks(this);
 
-		materia = new MateriaCadastroModel("Sinais e sistema", 68, "SIN123", 2);
+		materia = new MateriaCadastroModel();
+		
+		materia.setNome("Sinais e sistemas");
+		materia.setFrequencia(1);
+		materia.setHoras(68);
+		materia.setCodigo("SINSIS");
 
 		materiaDao = new MateriaDAO();
 		materiaDao.setNome(StringUtils.upperCase(materia.getNome()));
@@ -82,7 +87,12 @@ public class MateriaServiceTest {
 		
 		Mockito.when(this.materiaRepositoryMock.findMateriaByCodigo(this.materia.getCodigo())).thenReturn(null);
 
-		this.materia = new MateriaCadastroModel("Sinais e sistema", 68, "SIN123", 5);
+		this.materia = new MateriaCadastroModel();
+		
+		materia.setNome("Sinais e sistemas");
+		materia.setFrequencia(1);
+		materia.setHoras(68);
+		materia.setCodigo("SINSIS");
 		
 		this.materiaDao = new MateriaDAO();
 		this.materiaDao.setNome(StringUtils.upperCase(materia.getNome()));

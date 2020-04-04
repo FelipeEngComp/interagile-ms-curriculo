@@ -1,6 +1,7 @@
 package com.interagile.cliente.escola.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
 import com.interagile.cliente.escola.response.Response;
@@ -106,6 +108,29 @@ public class MateriaController {
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
 		} catch (Exception e) {
 			responseBuilder.data(false);
+			responseBuilder.erros(Arrays.asList(e.getMessage()));
+			responseBuilder.status(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		}
+	}
+	
+	@ApiOperation(value = "Listar matérias cadastradas")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
+			@ApiResponse(code = 400, message = "Erro na requisição") })
+	@GetMapping("/listar")
+	public ResponseEntity<Response<List<MateriaDAO>>> listarMateriasCadastradas() {
+		LOG.debug("Iniciando a controller");
+		ResponseBuilder<List<MateriaDAO>> responseBuilder = Response.builder();
+		try {
+			List<MateriaDAO>  matriculaCadastrada = this.materiaService.listar();
+			responseBuilder.data(matriculaCadastrada);
+			responseBuilder.status(HttpStatus.OK.value());
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		}catch (CurriculoException m) {
+			responseBuilder.erros(Arrays.asList(m.getMessage()));
+			responseBuilder.status(m.getHttpStatusCode());
+			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
+		} catch (Exception e) {
 			responseBuilder.erros(Arrays.asList(e.getMessage()));
 			responseBuilder.status(HttpStatus.INTERNAL_SERVER_ERROR.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());

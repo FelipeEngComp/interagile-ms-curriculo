@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.interagile.cliente.escola.dao.CursoDAO;
 import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
@@ -91,7 +90,7 @@ public class MateriaService implements IMateriaService {
 	}
 
 	@Override
-	public List<MateriaDAO> listarMaterias() {
+	public List<MateriaDAO> listar() {
 		return this.materiaRepository.findAll();
 	}
 

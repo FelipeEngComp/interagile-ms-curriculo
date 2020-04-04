@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.interagile.cliente.escola.cache.CacheConstants;
 import com.interagile.cliente.escola.dao.CursoDAO;
 import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
@@ -50,6 +52,7 @@ public class CursoService implements ICursoService {
 
 	}
 
+	@Cacheable(value = CacheConstants.CONSULTA_CURSO_POR_CODIGO, key = CacheConstants.ChaveCache.CHAVE_CODIGO, unless = "#result==null or #result.size()==0")
 	@Override
 	public CursoDAO consultaPorCod(String codigo) {
 
@@ -80,7 +83,7 @@ public class CursoService implements ICursoService {
 
 	@Override
 	public List<CursoDAO> listarCursos() {
-		
+
 		List<CursoDAO> cursoDao = this.cursoRepository.findAll();
 		return cursoDao;
 	}
@@ -89,9 +92,10 @@ public class CursoService implements ICursoService {
 
 		List<MateriaDAO> materiaDao = new ArrayList<>();
 
-		for (String materia : materias) {
-			materiaDao.add(this.materiaService.consultarMateriaDaoCadastrada(StringUtils.upperCase(materia)));
-		}
+		if (materias != null)
+			for (String materia : materias) {
+				materiaDao.add(this.materiaService.consultarMateriaDaoCadastrada(StringUtils.upperCase(materia)));
+			}
 		return materiaDao;
 	}
 

@@ -14,7 +14,7 @@ public interface IMateriaService {
 	public Boolean atualizar(final MateriaCadastroModel materia);
 	
 	public MateriaDAO consultarMateriaDaoCadastrada(String codMateria);
-	
-	public List<MateriaDAO> listarMaterias();
+
+	public List<MateriaDAO> listar();
 	
 }

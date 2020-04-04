@@ -49,12 +49,17 @@ public class MateriaControllerUnitTest {
 
 	@Test
 	public void testConsultaCadastroUsuarioSucesso() {
-		MateriaCadastroModel materiaCadastro = new MateriaCadastroModel("Sinais e sistemas", 68, "SINSIS", 1);
-
+		MateriaCadastroModel materiaCadastro = new MateriaCadastroModel();
+		
+		materiaCadastro.setNome("Sinais e sistemas");
+		materiaCadastro.setFrequencia(1);
+		materiaCadastro.setHoras(68);
+		materiaCadastro.setCodigo("SINSIS");
+		
 		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenReturn(materiaCadastro);
-
-		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
-				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
+		
+		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.withBasicAuth("interagile", "mscurriculo").exchange(
+				"http://localhost:" + this.port + "/materia/consultar/CodMat123",
 				HttpMethod.GET, null, new ParameterizedTypeReference<Response<MateriaCadastroModel>>() {
 				});
 
@@ -67,8 +72,8 @@ public class MateriaControllerUnitTest {
 
 		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenThrow(new CurriculoException("Error",HttpStatus.BAD_REQUEST.value()));
 
-		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
-				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
+		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.withBasicAuth("interagile", "mscurriculo").exchange(
+				"http://localhost:" + this.port + "/materia/consultar/CodMat123",
 				HttpMethod.GET, null, new ParameterizedTypeReference<Response<MateriaCadastroModel>>() {
 				});
 
@@ -80,8 +85,8 @@ public class MateriaControllerUnitTest {
 
 		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenThrow(new RuntimeException());
 
-		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.exchange(
-				"http://localhost:" + this.port + "/interagile-ms-curriculo/materia/consultar/CodMat123",
+		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.withBasicAuth("interagile", "mscurriculo").exchange(
+				"http://localhost:" + this.port + "/materia/consultar/CodMat123",
 				HttpMethod.GET, null, new ParameterizedTypeReference<Response<MateriaCadastroModel>>() {
 				});
 

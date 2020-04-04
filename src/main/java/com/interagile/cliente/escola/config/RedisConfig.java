@@ -30,10 +30,11 @@ public class RedisConfig {
 	    poolConfig.setNumTestsPerEvictionRun(3);
 	    poolConfig.setBlockWhenExhausted(true);
 
-	    RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("127.0.0.1", 6379);
+	    RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("ec2-35-174-250-33.compute-1.amazonaws.com", 12969);
 
 	    JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
-		return jedisConnectionFactory;
+	    
+	    return jedisConnectionFactory;
 	}
 	
 	@Bean

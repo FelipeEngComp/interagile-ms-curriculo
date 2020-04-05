@@ -4,22 +4,31 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
+import com.interagile.cliente.escola.model.dto.MateriaDTO;
 import com.interagile.cliente.escola.repository.IMateriaRepository;
 
 @Service
+@CacheConfig(cacheNames = "Materias")
 public class MateriaService implements IMateriaService {
 
 	private IMateriaRepository materiaRepository;
 
+	private ObjectMapper mapper;
+
 	@Autowired
 	public MateriaService(IMateriaRepository materiaRepository) {
 		this.materiaRepository = materiaRepository;
+		this.mapper = new ObjectMapper();
 	}
 
 	@Override
@@ -43,20 +52,16 @@ public class MateriaService implements IMateriaService {
 
 	}
 
+	@Cacheable(value = "consultar-materia", key = "#codMateria", unless = "#result == null")
 	@Override
-	public MateriaCadastroModel consultarMateriaCadastrada(String codMateria) {
+	public MateriaDTO consultarMateriaCadastrada(String codMateria) {
 		try {
 			final MateriaDAO materiaDao = this.materiaRepository.findMateriaByCodigo(codMateria);
 			if (materiaDao == null) {
 				throw new CurriculoException("Matéria não encontrada", HttpStatus.BAD_REQUEST.value());
 			}
-			MateriaCadastroModel materia = new MateriaCadastroModel() ;
-			materia.setCodigo(materiaDao.getCodigo());
-			materia.setFrequencia(materiaDao.getFrequencia());
-			materia.setHoras(materiaDao.getHoras());
-			materia.setNome(materiaDao.getNome());
 
-			return materia;
+			return this.mapper.convertValue(materiaDao, MateriaDTO.class);
 		} catch (CurriculoException m) {
 			throw m;
 		} catch (Exception e) {
@@ -89,9 +94,18 @@ public class MateriaService implements IMateriaService {
 		}
 	}
 
+	@Cacheable(value = "listar-materias", unless = "#result == null")
 	@Override
-	public List<MateriaDAO> listar() {
-		return this.materiaRepository.findAll();
+	public List<MateriaDTO> listar() {
+
+		try {
+			List<MateriaDAO> materiaDao = this.materiaRepository.findAll();
+
+			return this.mapper.convertValue(materiaDao, new TypeReference<List<MateriaDTO>>() {
+			});
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	public MateriaDAO consultarMateriaDaoCadastrada(String codMateria) {

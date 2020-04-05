@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
+import com.interagile.cliente.escola.model.dto.MateriaDTO;
 import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.service.IMateriaService;
 
@@ -49,14 +50,8 @@ public class MateriaControllerUnitTest {
 
 	@Test
 	public void testConsultaCadastroUsuarioSucesso() {
-		MateriaCadastroModel materiaCadastro = new MateriaCadastroModel();
 		
-		materiaCadastro.setNome("Sinais e sistemas");
-		materiaCadastro.setFrequencia(1);
-		materiaCadastro.setHoras(68);
-		materiaCadastro.setCodigo("SINSIS");
-		
-		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenReturn(materiaCadastro);
+		Mockito.when(materiaService.consultarMateriaCadastrada(StringUtils.upperCase("CodMat123"))).thenReturn(new MateriaDTO(12L, "nome", 68, "codigo", 2, false));
 		
 		ResponseEntity<Response<MateriaCadastroModel>> materia = restTemplate.withBasicAuth("interagile", "mscurriculo").exchange(
 				"http://localhost:" + this.port + "/materia/consultar/CodMat123",

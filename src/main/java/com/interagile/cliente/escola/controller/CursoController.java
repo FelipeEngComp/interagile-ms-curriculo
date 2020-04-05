@@ -3,6 +3,7 @@ package com.interagile.cliente.escola.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.interagile.cliente.escola.dao.CursoDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.CursoCadastroModel;
+import com.interagile.cliente.escola.model.dto.CursoDTO;
 import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.response.Response.ResponseBuilder;
 import com.interagile.cliente.escola.service.ICursoService;
@@ -68,7 +69,7 @@ public class CursoController {
 			@ApiResponse(code = 400, message = "Erro na requisição") })
 	@PutMapping("/atualizar")
 	public ResponseEntity<Response<Boolean>> atualizarCurso(@RequestBody CursoCadastroModel curso) {
-		LOG.debug("Iniciando a controller");
+		LOG.info("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
 		try {
 			Boolean cursoCadastrado = this.cursoService.atualizar(curso);
@@ -90,11 +91,11 @@ public class CursoController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
 	@GetMapping("/listar")
-	public ResponseEntity<Response<List<CursoDAO>>> listarCursos() {
-		LOG.debug("Iniciando a controller");
-		ResponseBuilder<List<CursoDAO>> responseBuilder = Response.builder();
+	public ResponseEntity<Response<List<CursoDTO>>> listarCursos() {
+		LOG.info("Iniciando a controller");
+		ResponseBuilder<List<CursoDTO>> responseBuilder = Response.builder();
 		try {
-			List<CursoDAO> cursoCadastrados = this.cursoService.listarCursos();
+			List<CursoDTO> cursoCadastrados = this.cursoService.listarCursos();
 			responseBuilder.data(cursoCadastrados);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
@@ -113,11 +114,11 @@ public class CursoController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
 	@GetMapping("/consultar/{codigo}")
-	public ResponseEntity<Response<CursoDAO>> consultarCursoPorCod(@PathVariable String codigo) {
-		LOG.debug("Iniciando a controller");
-		ResponseBuilder<CursoDAO> responseBuilder = Response.builder();
+	public ResponseEntity<Response<CursoDTO>> consultarCursoPorCod(@PathVariable String codigo) {
+		LOG.info("Iniciando a controller");
+		ResponseBuilder<CursoDTO> responseBuilder = Response.builder();
 		try {
-			CursoDAO cursoCadastrados = this.cursoService.consultaPorCod(codigo);
+			CursoDTO cursoCadastrados = this.cursoService.consultaPorCod(StringUtils.upperCase(codigo));
 			responseBuilder.data(cursoCadastrados);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());

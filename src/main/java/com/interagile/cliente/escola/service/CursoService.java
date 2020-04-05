@@ -5,13 +5,17 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.interagile.cliente.escola.dao.CursoDAO;
 import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.CursoCadastroModel;
+import com.interagile.cliente.escola.model.dto.CursoDTO;
 import com.interagile.cliente.escola.repository.ICursoRepository;
 
 @Service
@@ -19,11 +23,13 @@ public class CursoService implements ICursoService {
 
 	private ICursoRepository cursoRepository;
 	private IMateriaService materiaService;
+	private ObjectMapper mapper;
 
 	@Autowired
 	public CursoService(ICursoRepository cursoRepository, IMateriaService materiaService) {
 		this.cursoRepository = cursoRepository;
 		this.materiaService = materiaService;
+		this.mapper = new ObjectMapper();
 	}
 
 	@Override
@@ -50,8 +56,9 @@ public class CursoService implements ICursoService {
 
 	}
 
+	@Cacheable(value = "consultar-curso", key = "#codigo", unless = "#result == null")
 	@Override
-	public CursoDAO consultaPorCod(String codigo) {
+	public CursoDTO consultaPorCod(String codigo) {
 
 		CursoDAO curso = this.cursoRepository.findCursoByCodigo(codigo);
 
@@ -59,7 +66,7 @@ public class CursoService implements ICursoService {
 			throw new CurriculoException("Curso não encontrado", HttpStatus.BAD_REQUEST.value());
 		}
 
-		return curso;
+		return this.mapper.convertValue(curso, CursoDTO.class);
 	}
 
 	@Override
@@ -78,11 +85,18 @@ public class CursoService implements ICursoService {
 		return true;
 	}
 
+	@Cacheable(value = "listar-cursos", unless = "#result == null")
 	@Override
-	public List<CursoDAO> listarCursos() {
+	public List<CursoDTO> listarCursos() {
 
-		List<CursoDAO> cursoDao = this.cursoRepository.findAll();
-		return cursoDao;
+		try {
+			List<CursoDAO> cursoDao = this.cursoRepository.findAll();
+
+			return this.mapper.convertValue(cursoDao, new TypeReference<List<CursoDTO>>() {
+			});
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	private List<MateriaDAO> consultaMaterias(List<String> materias) {

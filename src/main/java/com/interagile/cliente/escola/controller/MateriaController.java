@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
+import com.interagile.cliente.escola.model.dto.MateriaDTO;
 import com.interagile.cliente.escola.response.Response;
 import com.interagile.cliente.escola.response.Response.ResponseBuilder;
 import com.interagile.cliente.escola.service.IMateriaService;
@@ -44,12 +44,12 @@ public class MateriaController {
 	@ApiOperation(value = "Consultar matéria")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@GetMapping("/consultar/{codMatricula}")
-	public ResponseEntity<Response<MateriaCadastroModel>> consultarMateriasCadastradas(@PathVariable String codMatricula) {
+	@GetMapping("/consultar/{codMateria}")
+	public ResponseEntity<Response<MateriaDTO>> consultarMateriasCadastradas(@PathVariable String codMateria) {
 		LOG.debug("Iniciando a controller");
-		ResponseBuilder<MateriaCadastroModel> responseBuilder = Response.builder();
+		ResponseBuilder<MateriaDTO> responseBuilder = Response.builder();
 		try {
-			MateriaCadastroModel matriculaCadastrada = this.materiaService.consultarMateriaCadastrada(StringUtils.upperCase(codMatricula));
+			MateriaDTO matriculaCadastrada = this.materiaService.consultarMateriaCadastrada(StringUtils.upperCase(codMateria));
 			responseBuilder.data(matriculaCadastrada);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());
@@ -114,15 +114,16 @@ public class MateriaController {
 		}
 	}
 	
+	
 	@ApiOperation(value = "Listar matérias cadastradas")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
 	@GetMapping("/listar")
-	public ResponseEntity<Response<List<MateriaDAO>>> listarMateriasCadastradas() {
+	public ResponseEntity<Response<List<MateriaDTO>>> listarMateriasCadastradas() {
 		LOG.debug("Iniciando a controller");
-		ResponseBuilder<List<MateriaDAO>> responseBuilder = Response.builder();
+		ResponseBuilder<List<MateriaDTO>> responseBuilder = Response.builder();
 		try {
-			List<MateriaDAO>  matriculaCadastrada = this.materiaService.listar();
+			List<MateriaDTO>  matriculaCadastrada = this.materiaService.listar();
 			responseBuilder.data(matriculaCadastrada);
 			responseBuilder.status(HttpStatus.OK.value());
 			return ResponseEntity.status(HttpStatus.OK).body(responseBuilder.build());

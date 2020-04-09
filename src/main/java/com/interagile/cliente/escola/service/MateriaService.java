@@ -94,7 +94,6 @@ public class MateriaService implements IMateriaService {
 		}
 	}
 
-	@Cacheable(value = "listar-materias", unless = "#result == null")
 	@Override
 	public List<MateriaDTO> listar() {
 

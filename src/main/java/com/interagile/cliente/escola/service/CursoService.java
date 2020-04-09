@@ -85,7 +85,6 @@ public class CursoService implements ICursoService {
 		return true;
 	}
 
-	@Cacheable(value = "listar-cursos", unless = "#result == null")
 	@Override
 	public List<CursoDTO> listarCursos() {
 

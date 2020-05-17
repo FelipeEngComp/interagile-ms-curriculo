@@ -44,7 +44,7 @@ public class MateriaController {
 	@ApiOperation(value = "Consultar matéria")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@GetMapping("/consultar/{codMateria}")
+	@GetMapping("/{codMateria}")
 	public ResponseEntity<Response<MateriaDTO>> consultarMateriasCadastradas(@PathVariable String codMateria) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<MateriaDTO> responseBuilder = Response.builder();
@@ -67,7 +67,7 @@ public class MateriaController {
 	@ApiOperation(value = "Cadastrar matéria")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@PostMapping("/cadastrar")
+	@PostMapping("/")
 	public ResponseEntity<Response<Boolean>> cadastrarMateria(@RequestBody MateriaCadastroModel materia) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
@@ -92,7 +92,7 @@ public class MateriaController {
 	@ApiOperation(value = "Atualizar matéria")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@PutMapping("/atualizar")
+	@PutMapping("/")
 	public ResponseEntity<Response<Boolean>> atualizarMateria(@RequestBody MateriaCadastroModel materia) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
@@ -118,7 +118,7 @@ public class MateriaController {
 	@ApiOperation(value = "Listar matérias cadastradas")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@GetMapping("/listar")
+	@GetMapping("/")
 	public ResponseEntity<Response<List<MateriaDTO>>> listarMateriasCadastradas() {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<List<MateriaDTO>> responseBuilder = Response.builder();

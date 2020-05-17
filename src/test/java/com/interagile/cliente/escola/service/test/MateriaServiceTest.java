@@ -16,9 +16,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
+import com.interagile.cliente.escola.model.MateriaDB;
 import com.interagile.cliente.escola.repository.IMateriaRepository;
 import com.interagile.cliente.escola.service.MateriaService;
 
@@ -33,7 +33,7 @@ public class MateriaServiceTest {
 	@InjectMocks
 	private MateriaService materiaService;
 
-	private MateriaDAO materiaDao;
+	private MateriaDB materiaDao;
 
 	private MateriaCadastroModel materia;
 
@@ -49,7 +49,7 @@ public class MateriaServiceTest {
 		materia.setHoras(68);
 		materia.setCodigo("SINSIS");
 
-		materiaDao = new MateriaDAO();
+		materiaDao = new MateriaDB();
 		materiaDao.setNome(StringUtils.upperCase(materia.getNome()));
 		materiaDao.setCodigo(StringUtils.upperCase(materia.getCodigo()));
 		materiaDao.setFrequencia(materia.getFrequencia());
@@ -85,7 +85,7 @@ public class MateriaServiceTest {
 	@Test
 	public void cadastrarMateriaCurriculoException() {
 		
-		Mockito.when(this.materiaRepositoryMock.findMateriaByCodigo(this.materia.getCodigo())).thenReturn(new MateriaDAO());
+		Mockito.when(this.materiaRepositoryMock.findMateriaByCodigo(this.materia.getCodigo())).thenReturn(new MateriaDB());
 
 		this.materia = new MateriaCadastroModel();
 		
@@ -94,7 +94,7 @@ public class MateriaServiceTest {
 		materia.setHoras(68);
 		materia.setCodigo("SINSIS");
 		
-		this.materiaDao = new MateriaDAO();
+		this.materiaDao = new MateriaDB();
 		this.materiaDao.setNome(StringUtils.upperCase(materia.getNome()));
 		this.materiaDao.setCodigo(StringUtils.upperCase(materia.getCodigo()));
 		this.materiaDao.setFrequencia(materia.getFrequencia());

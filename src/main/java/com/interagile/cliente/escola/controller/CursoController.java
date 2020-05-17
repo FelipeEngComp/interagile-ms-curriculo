@@ -44,7 +44,7 @@ public class CursoController {
 	@ApiOperation(value = "Cadastrar curso")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@PostMapping("/cadastrar")
+	@PostMapping("/")
 	public ResponseEntity<Response<Boolean>> cadastrarCurso(@RequestBody CursoCadastroModel curso) {
 		LOG.debug("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
@@ -67,7 +67,7 @@ public class CursoController {
 	@ApiOperation(value = "Atualizar curso")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@PutMapping("/atualizar")
+	@PutMapping("/")
 	public ResponseEntity<Response<Boolean>> atualizarCurso(@RequestBody CursoCadastroModel curso) {
 		LOG.info("Iniciando a controller");
 		ResponseBuilder<Boolean> responseBuilder = Response.builder();
@@ -90,7 +90,7 @@ public class CursoController {
 	@ApiOperation(value = "Listar cursos")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@GetMapping("/listar")
+	@GetMapping("/")
 	public ResponseEntity<Response<List<CursoDTO>>> listarCursos() {
 		LOG.info("Iniciando a controller");
 		ResponseBuilder<List<CursoDTO>> responseBuilder = Response.builder();
@@ -113,7 +113,7 @@ public class CursoController {
 	@ApiOperation(value = "Consultar curso por código cadastrado")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso na requisição"),
 			@ApiResponse(code = 400, message = "Erro na requisição") })
-	@GetMapping("/consultar/{codigo}")
+	@GetMapping("/{codigo}")
 	public ResponseEntity<Response<CursoDTO>> consultarCursoPorCod(@PathVariable String codigo) {
 		LOG.info("Iniciando a controller");
 		ResponseBuilder<CursoDTO> responseBuilder = Response.builder();

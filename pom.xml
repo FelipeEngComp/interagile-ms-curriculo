@@ -13,7 +13,7 @@
 	<artifactId>ms-curriculo</artifactId>
 	<version>1.0.0</version>
 	<name>curriculo</name>
-	<description>Projeto template para os microserviços</description>
+	<description>Microservio com as informações das matérias e cursos</description>
 
 	<!-- Controle das versões das dependências do projeto -->
 	<properties>

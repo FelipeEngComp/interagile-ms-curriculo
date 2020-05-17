@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.MateriaCadastroModel;
+import com.interagile.cliente.escola.model.MateriaDB;
 import com.interagile.cliente.escola.model.dto.MateriaDTO;
 import com.interagile.cliente.escola.repository.IMateriaRepository;
 
@@ -36,7 +36,7 @@ public class MateriaService implements IMateriaService {
 
 		try {
 			this.validaCadastro(materia);
-			MateriaDAO materiaDao = new MateriaDAO();
+			MateriaDB materiaDao = new MateriaDB();
 			materiaDao.setNome(StringUtils.upperCase(materia.getNome()));
 			materiaDao.setCodigo(StringUtils.upperCase(materia.getCodigo()));
 			materiaDao.setFrequencia(materia.getFrequencia());
@@ -56,7 +56,7 @@ public class MateriaService implements IMateriaService {
 	@Override
 	public MateriaDTO consultarMateriaCadastrada(String codMateria) {
 		try {
-			final MateriaDAO materiaDao = this.materiaRepository.findMateriaByCodigo(codMateria);
+			final MateriaDB materiaDao = this.materiaRepository.findMateriaByCodigo(codMateria);
 			if (materiaDao == null) {
 				throw new CurriculoException("Matéria não encontrada", HttpStatus.BAD_REQUEST.value());
 			}
@@ -74,7 +74,7 @@ public class MateriaService implements IMateriaService {
 	public Boolean atualizar(MateriaCadastroModel materia) {
 		try {
 			this.validaEntradaGeral(materia);
-			MateriaDAO materiaDao = this.materiaRepository.findMateriaByCodigo(materia.getCodigo());
+			MateriaDB materiaDao = this.materiaRepository.findMateriaByCodigo(materia.getCodigo());
 			if (materiaDao != null) {
 				materiaDao.setIdMateria(materiaDao.getIdMateria());
 				materiaDao.setNome(StringUtils.upperCase(materia.getNome()));
@@ -98,7 +98,7 @@ public class MateriaService implements IMateriaService {
 	public List<MateriaDTO> listar() {
 
 		try {
-			List<MateriaDAO> materiaDao = this.materiaRepository.findAll();
+			List<MateriaDB> materiaDao = this.materiaRepository.findAll();
 
 			return this.mapper.convertValue(materiaDao, new TypeReference<List<MateriaDTO>>() {
 			});
@@ -107,9 +107,9 @@ public class MateriaService implements IMateriaService {
 		}
 	}
 
-	public MateriaDAO consultarMateriaDaoCadastrada(String codMateria) {
+	public MateriaDB consultarMateriaDaoCadastrada(String codMateria) {
 		try {
-			final MateriaDAO materiaDao = this.materiaRepository.findMateriaByCodigo(codMateria);
+			final MateriaDB materiaDao = this.materiaRepository.findMateriaByCodigo(codMateria);
 			if (materiaDao == null) {
 				throw new CurriculoException("Matéria não encontrada", HttpStatus.BAD_REQUEST.value());
 			}

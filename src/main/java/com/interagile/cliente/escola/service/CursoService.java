@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.interagile.cliente.escola.dao.CursoDAO;
-import com.interagile.cliente.escola.dao.MateriaDAO;
 import com.interagile.cliente.escola.exception.CurriculoException;
 import com.interagile.cliente.escola.model.CursoCadastroModel;
+import com.interagile.cliente.escola.model.CursoDB;
+import com.interagile.cliente.escola.model.MateriaDB;
 import com.interagile.cliente.escola.model.dto.CursoDTO;
 import com.interagile.cliente.escola.repository.ICursoRepository;
 
@@ -42,7 +42,7 @@ public class CursoService implements ICursoService {
 
 			this.validarParametrosDeEntrada(curso);
 
-			CursoDAO cursoDAO = this.criaObj(curso, new CursoDAO());
+			CursoDB cursoDAO = this.criaObj(curso, new CursoDB());
 
 			this.cursoRepository.save(cursoDAO);
 
@@ -60,7 +60,7 @@ public class CursoService implements ICursoService {
 	@Override
 	public CursoDTO consultaPorCod(String codigo) {
 
-		CursoDAO curso = this.cursoRepository.findCursoByCodigo(codigo);
+		CursoDB curso = this.cursoRepository.findCursoByCodigo(codigo);
 
 		if (curso == null) {
 			throw new CurriculoException("Curso não encontrado", HttpStatus.BAD_REQUEST.value());
@@ -74,7 +74,7 @@ public class CursoService implements ICursoService {
 
 		this.validarParametrosDeEntrada(cursoModel);
 
-		CursoDAO curso = this.cursoRepository.findCursoByCodigo(StringUtils.upperCase(cursoModel.getCodigo()));
+		CursoDB curso = this.cursoRepository.findCursoByCodigo(StringUtils.upperCase(cursoModel.getCodigo()));
 
 		if (curso == null) {
 			throw new CurriculoException("Curso ainda não cadastrado", HttpStatus.BAD_REQUEST.value());
@@ -89,7 +89,7 @@ public class CursoService implements ICursoService {
 	public List<CursoDTO> listarCursos() {
 
 		try {
-			List<CursoDAO> cursoDao = this.cursoRepository.findAll();
+			List<CursoDB> cursoDao = this.cursoRepository.findAll();
 
 			return this.mapper.convertValue(cursoDao, new TypeReference<List<CursoDTO>>() {
 			});
@@ -98,9 +98,9 @@ public class CursoService implements ICursoService {
 		}
 	}
 
-	private List<MateriaDAO> consultaMaterias(List<String> materias) {
+	private List<MateriaDB> consultaMaterias(List<String> materias) {
 
-		List<MateriaDAO> materiaDao = new ArrayList<>();
+		List<MateriaDB> materiaDao = new ArrayList<>();
 
 		if (materias != null)
 			for (String materia : materias) {
@@ -109,9 +109,9 @@ public class CursoService implements ICursoService {
 		return materiaDao;
 	}
 
-	private CursoDAO criaObj(CursoCadastroModel curso, CursoDAO cursoDAO) {
+	private CursoDB criaObj(CursoCadastroModel curso, CursoDB cursoDAO) {
 
-		List<MateriaDAO> materias = this.consultaMaterias(curso.getMaterias());
+		List<MateriaDB> materias = this.consultaMaterias(curso.getMaterias());
 
 		cursoDAO.setCodigo(StringUtils.upperCase(curso.getCodigo()));
 		cursoDAO.setNome(StringUtils.upperCase(curso.getNome()));

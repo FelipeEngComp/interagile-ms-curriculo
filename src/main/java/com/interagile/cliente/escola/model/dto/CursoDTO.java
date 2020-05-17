@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.interagile.cliente.escola.dao.MateriaDAO;
+import com.interagile.cliente.escola.model.MateriaDB;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +26,5 @@ public class CursoDTO implements Serializable{
 
 	private int semestres;
 
-	private List<MateriaDAO> materias = new ArrayList<>();
+	private List<MateriaDB> materias = new ArrayList<>();
 }
